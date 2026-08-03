@@ -108,15 +108,18 @@ if res_pipelines.status_code == 200:
 print("\n🎉 Mapeamento inicial concluído!")
 
 # ==========================================
-# 5. MAPEAR CONTATOS (CLIENTES)
+# 5. MAPEAR CONTATOS (CLIENTES COM CAMPOS PERSONALIZADOS)
 # ==========================================
 print("👤 Buscando Contatos (Clientes) na Kommo...")
 
 query_tabela_contatos = """
 CREATE TABLE IF NOT EXISTS contatos_kommo (
     id BIGINT PRIMARY KEY,
-    nome VARCHAR(255)
+    nome VARCHAR(255),
+    raw_custom_fields JSONB
 );
+
+ALTER TABLE contatos_kommo ADD COLUMN IF NOT EXISTS raw_custom_fields JSONB;
 """
 with engine.begin() as conn:
     conn.execute(text(query_tabela_contatos))
@@ -135,15 +138,19 @@ while True:
     list_contacts = []
     
     for c in contacts_data:
+        custom_fields = json.dumps(c.get("custom_fields_values") or [])
         list_contacts.append({
             "id": c["id"],
-            "nome": c.get("name", "Sem Nome")
+            "nome": c.get("name", "Sem Nome"),
+            "raw_custom_fields": custom_fields
         })
         
     query_contacts = """
-    INSERT INTO contatos_kommo (id, nome)
-    VALUES (:id, :nome)
-    ON CONFLICT (id) DO UPDATE SET nome = EXCLUDED.nome;
+    INSERT INTO contatos_kommo (id, nome, raw_custom_fields)
+    VALUES (:id, :nome, :raw_custom_fields)
+    ON CONFLICT (id) DO UPDATE SET 
+        nome = EXCLUDED.nome,
+        raw_custom_fields = EXCLUDED.raw_custom_fields;
     """
     
     with engine.begin() as conn:
@@ -157,4 +164,4 @@ while True:
         
     pagina_contatos += 1
 
-print(f"✅ {total_contatos} Contatos (Clientes) sincronizados com sucesso!")
+print(f"✅ {total_contatos} Contatos (Clientes) sincronizados com sucesso com custom fields!")
