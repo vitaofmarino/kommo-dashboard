@@ -12,9 +12,10 @@ KOMMO_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVmOTZlYTFlNDJkYmM1Y
 
 senha_segura = quote_plus("Cafe2021@@*")
 
-USER = "postgres"
-HOST = "db.mwdhclwookhpwzrhfjjp.supabase.co"
-PORT = "5432"
+# AJUSTADO: Conexão via Pooler do Supabase (suporta IPv4 do GitHub Actions)
+USER = "postgres.mwdhclwookhpwzrhfjjp"
+HOST = "aws-0-sa-east-1.pooler.supabase.com"
+PORT = "6543"
 DBNAME = "postgres"
 
 SUPABASE_URL = f"postgresql+psycopg2://{USER}:{senha_segura}@{HOST}:{PORT}/{DBNAME}?sslmode=require&connect_timeout=30"
@@ -60,7 +61,6 @@ total_salvos = 0
 print("🚀 Retomando busca e envio dos leads (com contatos) para o Supabase...\n")
 
 while True:
-    # ATENÇÃO AQUI: Adicionado &with=contacts para trazer os vínculos do Kommo
     url_leads = f"https://{KOMMO_SUBDOMAIN}.kommo.com/api/v4/leads?limit=250&page={pagina}&with=contacts"
     res = requests.get(url_leads, headers=headers)
     
