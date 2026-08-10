@@ -10,13 +10,14 @@ KOMMO_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVmOTZlYTFlNDJkYmM1Y
 
 senha_segura = quote_plus("Cafe2021@@*")
 
-# AJUSTADO: Usar postgres e a porta 5432 no Pooler
-USER = "postgres"
+# AJUSTE DEFINITIVO: Usuário com ID do projeto + Porta 5432 no Pooler
+USER = "postgres.mwdhclwookhpwzrhfjjp"
 HOST = "aws-0-sa-east-1.pooler.supabase.com"
 PORT = "5432"
 DBNAME = "postgres"
 
 SUPABASE_URL = f"postgresql+psycopg2://{USER}:{senha_segura}@{HOST}:{PORT}/{DBNAME}?sslmode=require&connect_timeout=30"
+
 engine = create_engine(SUPABASE_URL, pool_pre_ping=True)
 headers = {"Authorization": f"Bearer {KOMMO_TOKEN}"}
 
