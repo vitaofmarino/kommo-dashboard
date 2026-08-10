@@ -10,9 +10,10 @@ KOMMO_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVmOTZlYTFlNDJkYmM1Y
 
 senha_segura = quote_plus("Cafe2021@@*")
 
-USER = "postgres"
-HOST = "db.mwdhclwookhpwzrhfjjp.supabase.co"
-PORT = "5432"
+# AJUSTADO: Conexão via Pooler do Supabase (suporta IPv4 do GitHub Actions)
+USER = "postgres.mwdhclwookhpwzrhfjjp"
+HOST = "aws-0-sa-east-1.pooler.supabase.com"
+PORT = "6543"
 DBNAME = "postgres"
 
 SUPABASE_URL = f"postgresql+psycopg2://{USER}:{senha_segura}@{HOST}:{PORT}/{DBNAME}?sslmode=require&connect_timeout=30"
