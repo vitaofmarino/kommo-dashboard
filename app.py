@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 from datetime import datetime
@@ -7,18 +8,20 @@ from urllib.parse import quote_plus
 # ==========================================
 # 1. CONFIGURAÇÕES
 # ==========================================
-KOMMO_SUBDOMAIN = "miletobr"
-KOMMO_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVmOTZlYTFlNDJkYmM1YWIzN2FjMmVhMjFkOWExMWE5NTRmNjEzZTFjZTI4Y2M2NzE3M2EzNTYyOTY3NDRiMmNjNDRhYjZmOWRjOTdmYWNjIn0.eyJhdWQiOiI2MzM4MDNjNC0zNDVmLTQ1NDItOWY5ZS0zMDk3MTZmMjM5NjAiLCJqdGkiOiI1Zjk2ZWExZTQyZGJjNWFiMzdhYzJlYTIxZDlhMTFhOTU0ZjYxM2UxY2UyOGNjNjcxNzNhMzU2Mjk2NzQ0YjJjYzQ0YWI2ZjlkYzk3ZmFjYyIsImlhdCI6MTc4NDcyNjU3MCwibmJmIjoxNzg0NzI2NTcwLCJleHAiOjE4MzAyMTEyMDAsInN1YiI6IjE0NTUyODM1IiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjM1ODU3OTgzLCJiYXNlX2RvbWFpbiI6ImtvbW1vLmNvbSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJwdXNoX25vdGlmaWNhdGlvbnMiLCJmaWxlcyIsImNybSIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiXSwiaGFzaF91dWlkIjoiYjU4MWQxZDMtYTcxNS00YzRmLTkwMDctZTYwYmI1MzlmMTdmIiwiYXBpX2RvbWFpbiI6ImFwaS1jLmtvbW1vLmNvbSJ9.RBFF1wCgOF8wdTqPLXpabe4LL0boXQ8CZ89ovXzbZiTDbS_vdVmRjQwMHeMLaGixJy54TiVpTNScqzmg1BR2wiaonJya3FcxiqqfZIdIlx6QRNZnzDU2FqMRGfwGKDxrpuuewpv0crDrSjTLfF5sLb1kAPYYnrnWl73iKr2gxTzDLjmAdn9SRKWhpBTUH78rsSR4kTTAiEdtKdAJCNkJus6IIdHc6rKRsvuj25HmWuv0arX3MpBFZEv2ghMGOZQrwYwX5XbXhxEaMz43XpDP-o3yOAv4rcOG929NeW0foUDpR7ysCScMeSbPQp5GuKHU3d0hj6iD0qllfiAmtfDfVw"
+KOMMO_SUBDOMAIN = os.getenv("KOMMO_SUBDOMAIN", "miletobr")
+KOMMO_TOKEN = os.getenv("KOMMO_ACCESS_TOKEN", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVmOTZlYTFlNDJkYmM1YWIzN2FjMmVhMjFkOWExMWE5NTRmNjEzZTFjZTI4Y2M2NzE3M2EzNTYyOTY3NDRiMmNjNDRhYjZmOWRjOTdmYWNjIn0.eyJhdWQiOiI2MzM4MDNjNC0zNDVmLTQ1NDItOWY5ZS0zMDk3MTZmMjM5NjAiLCJqdGkiOiI1Zjk2ZWExZTQyZGJjNWFiMzdhYzJlYTIxZDlhMTFhOTU0ZjYxM2UxY2UyOGNjNjcxNzNhMzU2Mjk2NzQ0YjJjYzQ0YWI2ZjlkYzk3ZmFjYyIsImlhdCI6MTc4NDcyNjU3MCwibmJmIjoxNzg0NzI2NTcwLCJleHAiOjE4MzAyMTEyMDAsInN1YiI6IjE0NTUyODM1IiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjM1ODU3OTgzLCJiYXNlX2RvbWFpbiI6ImtvbW1vLmNvbSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJwdXNoX25vdGlmaWNhdGlvbnMiLCJmaWxlcyIsImNybSIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiXSwiaGFzaF91dWlkIjoiYjU4MWQxZDMtYTcxNS00YzRmLTkwMDctZTYwYmI1MzlmMTdmIiwiYXBpX2RvbWFpbiI6ImFwaS1jLmtvbW1vLmNvbSJ9.RBFF1wCgOF8wdTqPLXpabe4LL0boXQ8CZ89ovXzbZiTDbS_vdVmRjQwMHeMLaGixJy54TiVpTNScqzmg1BR2wiaonJya3FcxiqqfZIdIlx6QRNZnzDU2FqMRGfwGKDxrpuuewpv0crDrSjTLfF5sLb1kAPYYnrnWl73iKr2gxTzDLjmAdn9SRKWhpBTUH78rsSR4kTTAiEdtKdAJCNkJus6IIdHc6rKRsvuj25HmWuv0arX3MpBFZEv2ghMGOZQrwYwX5XbXhxEaMz43XpDP-o3yOAv4rcOG929NeW0foUDpR7ysCScMeSbPQp5GuKHU3d0hj6iD0qllfiAmtfDfVw")
 
 senha_segura = quote_plus("Cafe2021@@*")
 
-# AJUSTE DEFINITIVO: Usuário com ID do projeto + Porta 5432 no Pooler
+# Conexão via Transaction Pooler na porta 6543
 USER = "postgres.mwdhclwookhpwzrhfjjp"
 HOST = "aws-0-sa-east-1.pooler.supabase.com"
-PORT = "5432"
+PORT = "6543"
 DBNAME = "postgres"
 
-SUPABASE_URL = f"postgresql+psycopg2://{USER}:{senha_segura}@{HOST}:{PORT}/{DBNAME}?sslmode=require&connect_timeout=30"
+# Lê do GitHub Secrets se disponível, caso contrário usa a string padrão construída
+DEFAULT_URL = f"postgresql+psycopg2://{USER}:{senha_segura}@{HOST}:{PORT}/{DBNAME}?sslmode=require&connect_timeout=30"
+SUPABASE_URL = os.getenv("SUPABASE_DB_URL", DEFAULT_URL)
 
 # ==========================================
 # 2. CONEXÃO COM BANCO DE DADOS
@@ -26,7 +29,6 @@ SUPABASE_URL = f"postgresql+psycopg2://{USER}:{senha_segura}@{HOST}:{PORT}/{DBNA
 print("🔗 Conectando ao Supabase...")
 engine = create_engine(SUPABASE_URL, pool_pre_ping=True, pool_recycle=300)
 
-# Criando a tabela já com o campo contact_id e cliente_nome
 query_criar_tabela = """
 CREATE TABLE IF NOT EXISTS leads_kommo (
     id BIGINT PRIMARY KEY,
@@ -42,7 +44,6 @@ CREATE TABLE IF NOT EXISTS leads_kommo (
     raw_custom_fields JSONB
 );
 
--- Garantir que a coluna contact_id exista caso a tabela já estivesse criada
 ALTER TABLE leads_kommo ADD COLUMN IF NOT EXISTS contact_id BIGINT;
 """
 
@@ -91,7 +92,6 @@ while True:
         closed_at = datetime.fromtimestamp(l["closed_at"]) if l.get("closed_at") else None
         updated_at = datetime.fromtimestamp(l["updated_at"]) if l.get("updated_at") else None
         
-        # Puxa o ID do primeiro contato vinculado ao lead (se houver)
         embedded_contacts = l.get("_embedded", {}).get("contacts", [])
         contact_id = embedded_contacts[0]["id"] if embedded_contacts else None
 
