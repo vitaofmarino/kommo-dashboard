@@ -7,9 +7,11 @@ from sqlalchemy import create_engine, text
 # ==========================================
 # 1. CONFIGURAÇÕES
 # ==========================================
-# Colocamos o subdomínio direto no código para evitar o erro de 'InvalidURL'
+# Subdomínio direto no código
 KOMMO_SUBDOMAIN = "miletobr" 
-KOMMO_TOKEN = os.getenv("KOMMO_ACCESS_TOKEN", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI3YTcxNDEyMjQ3YzdkM2QyNjFmYzU1MTY1ZmQyMTFkOTJmMDJmM2NmZWVmMDBkMDFhNzQwMTM0NDBjYWM5OGE4MDBmYjI5MTYyYzc2OTgyIn0.eyJhdWQiOiI2MzM4MDNjNC0zNDVmLTQ1NDItOWY5ZS0zMDk3MTZmMjM5NjAiLCJqdGkiOiIyN2E3MTQxMjI0N2M3ZDNkMjYxZmM1NTE2NWZkMjExZDkyZjAyZjNjZmVlZjAwZDAxYTc0MDEzNDQwY2FjOThhODAwZmIyOTE2MmM3Njk4MiIsImlhdCI6MTc4NzMzNDI0MiwibmJmIjoxNzg3MzM0MjQyLCJleHAiOjE4NjE5MjAwMDAsInN1YiI6IjE0NTUyODM1IiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjM1ODU3OTgzLCJiYXNlX2RvbWFpbiI6ImtvbW1vLmNvbSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJwdXNoX25vdGlmaWNhdGlvbnMiLCJmaWxlcyIsImNybSIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiXSwiaGFzaF91dWlkIjoiZWJhYWNlYWMtNjcxMC00MTgwLWEyMTMtMGJlY2Q4OGJlZmQxIiwiYXBpX2RvbWFpbiI6ImFwaS1jLmtvbW1vLmNvbSJ9.jM7d_M2nFYRAzwmuQ050KpCbCsUKtfmIkrg9B7VHiu8zG-Xh67qSBzyAZzyb1Qx2uwgS10AmfkMPNbhhGl-nE38JlKtpjRxRPTSE4iRVWkhxCNYqfLUnouqXON6xAwHUvQcVXNTm3evE9mW_kDd8nvUPDEeKRGly3YGRoaB-GnLwX0ZqJEyIpGXj_-6RaHBiaazIdg2Un72r4Az9bzGB0rr2I9CC6bhBi47gMXC-pOBDnJhIRuRtXqj4TFPie-jhLcHXvQn_2VETIrSv961wrfP6F9VK_h-nJACUhT0hVCiqW1Bl8E5phy0e0VFnM8MCFvcAG8aOeNH7pkyRTz7MWg")
+
+# Tiramos o os.getenv para GARANTIR que ele use este token novo, ignorando o GitHub Secrets!
+KOMMO_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI3YTcxNDEyMjQ3YzdkM2QyNjFmYzU1MTY1ZmQyMTFkOTJmMDJmM2NmZWVmMDBkMDFhNzQwMTM0NDBjYWM5OGE4MDBmYjI5MTYyYzc2OTgyIn0.eyJhdWQiOiI2MzM4MDNjNC0zNDVmLTQ1NDItOWY5ZS0zMDk3MTZmMjM5NjAiLCJqdGkiOiIyN2E3MTQxMjI0N2M3ZDNkMjYxZmM1NTE2NWZkMjExZDkyZjAyZjNjZmVlZjAwZDAxYTc0MDEzNDQwY2FjOThhODAwZmIyOTE2MmM3Njk4MiIsImlhdCI6MTc4NzMzNDI0MiwibmJmIjoxNzg3MzM0MjQyLCJleHAiOjE4NjE5MjAwMDAsInN1YiI6IjE0NTUyODM1IiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjM1ODU3OTgzLCJiYXNlX2RvbWFpbiI6ImtvbW1vLmNvbSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJwdXNoX25vdGlmaWNhdGlvbnMiLCJmaWxlcyIsImNybSIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiXSwiaGFzaF91dWlkIjoiZWJhYWNlYWMtNjcxMC00MTgwLWEyMTMtMGJlY2Q4OGJlZmQxIiwiYXBpX2RvbWFpbiI6ImFwaS1jLmtvbW1vLmNvbSJ9.jM7d_M2nFYRAzwmuQ050KpCbCsUKtfmIkrg9B7VHiu8zG-Xh67qSBzyAZzyb1Qx2uwgS10AmfkMPNbhhGl-nE38JlKtpjRxRPTSE4iRVWkhxCNYqfLUnouqXON6xAwHUvQcVXNTm3evE9mW_kDd8nvUPDEeKRGly3YGRoaB-GnLwX0ZqJEyIpGXj_-6RaHBiaazIdg2Un72r4Az9bzGB0rr2I9CC6bhBi47gMXC-pOBDnJhIRuRtXqj4TFPie-jhLcHXvQn_2VETIrSv961wrfP6F9VK_h-nJACUhT0hVCiqW1Bl8E5phy0e0VFnM8MCFvcAG8aOeNH7pkyRTz7MWg"
 
 # URL ajustada com o formato correto de usuário para Pooler: postgres.ID_DO_PROJETO
 SUPABASE_URL = "postgresql+psycopg2://postgres.mwdhclwookhpwzrhfjjp:Romeuzinho22@aws-1-us-east-2.pooler.supabase.com:6543/postgres?sslmode=require"
@@ -56,7 +58,14 @@ while True:
     url_leads = f"https://{KOMMO_SUBDOMAIN}.kommo.com/api/v4/leads?limit=250&page={pagina}&with=contacts"
     res = requests.get(url_leads, headers=headers)
     
-    if res.status_code == 204 or res.status_code != 200:
+    # Dedo-duro: Se a Kommo der qualquer erro, vamos ver no log em vez de fechar silenciosamente!
+    if res.status_code != 200 and res.status_code != 204:
+        print(f"❌ A Kommo bloqueou o acesso! Código de erro: {res.status_code}")
+        print(f"Detalhes do erro: {res.text}")
+        break
+        
+    if res.status_code == 204:
+        print("Fim dos dados (Página vazia).")
         break
         
     dados = res.json()
