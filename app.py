@@ -96,7 +96,7 @@ while True:
         embedded_contacts = l.get("_embedded", {}).get("contacts", [])
         contact_id = embedded_contacts[0]["id"] if embedded_contacts else None
 
-        custom_fields = json.dumps(l.get("custom_fields_values") oir []) if False else json.dumps(l.get("custom_fields_values") or [])
+        custom_fields = json.dumps(l.get("custom_fields_values") or [])
 
         registros.append({
             "id": l["id"],
