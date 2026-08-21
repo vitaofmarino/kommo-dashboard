@@ -11,23 +11,23 @@ from urllib.parse import quote_plus
 KOMMO_SUBDOMAIN = os.getenv("KOMMO_SUBDOMAIN", "miletobr")
 KOMMO_TOKEN = os.getenv("KOMMO_ACCESS_TOKEN", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVmOTZlYTFlNDJkYmM1YWIzN2FjMmVhMjFkOWExMWE5NTRmNjEzZTFjZTI4Y2M2NzE3M2EzNTYyOTY3NDRiMmNjNDRhYjZmOWRjOTdmYWNjIn0.eyJhdWQiOiI2MzM4MDNjNC0zNDVmLTQ1NDItOWY5ZS0zMDk3MTZmMjM5NjAiLCJqdGkiOiI1Zjk2ZWExZTQyZGJjNWFiMzdhYzJlYTIxZDlhMTFhOTU0ZjYxM2UxY2UyOGNjNjcxNzNhMzU2Mjk2NzQ0YjJjYzQ0YWI2ZjlkYzk3ZmFjYyIsImlhdCI6MTc4NDcyNjU3MCwibmJmIjoxNzg0NzI2NTcwLCJleHAiOjE4MzAyMTEyMDAsInN1YiI6IjE0NTUyODM1IiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjM1ODU3OTgzLCJiYXNlX2RvbWFpbiI6ImtvbW1vLmNvbSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJwdXNoX25vdGlmaWNhdGlvbnMiLCJmaWxlcyIsImNybSIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiXSwiaGFzaF91dWlkIjoiYjU4MWQxZDMtYTcxNS00YzRmLTkwMDctZTYwYmI1MzlmMTdmIiwiYXBpX2RvbWFpbiI6ImFwaS1jLmtvbW1vLmNvbSJ9.RBFF1wCgOF8wdTqPLXpabe4LL0boXQ8CZ89ovXzbZiTDbS_vdVmRjQwMHeMLaGixJy54TiVpTNScqzmg1BR2wiaonJya3FcxiqqfZIdIlx6QRNZnzDU2FqMRGfwGKDxrpuuewpv0crDrSjTLfF5sLb1kAPYYnrnWl73iKr2gxTzDLjmAdn9SRKWhpBTUH78rsSR4kTTAiEdtKdAJCNkJus6IIdHc6rKRsvuj25HmWuv0arX3MpBFZEv2ghMGOZQrwYwX5XbXhxEaMz43XpDP-o3yOAv4rcOG929NeW0foUDpR7ysCScMeSbPQp5GuKHU3d0hj6iD0qllfiAmtfDfVw")
 
-# Senha nova tratada corretamente contra os colchetes
+# Senha nova com tratamento correto para os colchetes
 SENHA_PURA = "[Romeuzinho24]"
 senha_segura = quote_plus(SENHA_PURA)
 
-# Configuração limpa baseada na sua URL original
-USER = "postgres"
-HOST = "db.mwdhclwookhpwzrhfjjp.supabase.co"
-PORT = "5432"
+# Configuração OBRIGATÓRIA via Transaction Pooler para funcionar no GitHub Actions (IPv4)
+USER = "postgres.mwdhclwookhpwzrhfjjp"
+HOST = "aws-0-sa-east-1.pooler.supabase.com"
+PORT = "6543"
 DBNAME = "postgres"
 
-# Forçamos a URL diretamente no código para ignorar qualquer lixo que tenha ficado no GitHub Secrets
-SUPABASE_URL = f"postgresql+psycopg2://{USER}:{senha_segura}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
+# Forçamos a URL correta no código
+SUPABASE_URL = f"postgresql+psycopg2://{USER}:{senha_segura}@{HOST}:{PORT}/{DBNAME}?sslmode=require&connect_timeout=30"
 
 # ==========================================
 # 2. CONEXÃO COM BANCO DE DADOS
 # ==========================================
-print("🔗 Conectando ao Supabase...")
+print("🔗 Conectando ao Supabase via Pooler...")
 engine = create_engine(SUPABASE_URL, pool_pre_ping=True, pool_recycle=300)
 
 query_criar_tabela = """
