@@ -10,8 +10,8 @@ from sqlalchemy import create_engine, text
 KOMMO_SUBDOMAIN = os.getenv("KOMMO_SUBDOMAIN", "miletobr")
 KOMMO_TOKEN = os.getenv("KOMMO_ACCESS_TOKEN", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVmOTZlYTFlNDJkYmM1YWIzN2FjMmVhMjFkOWExMWE5NTRmNjEzZTFjZTI4Y2M2NzE3M2EzNTYyOTY3NDRiMmNjNDRhYjZmOWRjOTdmYWNjIn0.eyJhdWQiOiI2MzM4MDNjNC0zNDVmLTQ1NDItOWY5ZS0zMDk3MTZmMjM5NjAiLCJqdGkiOiI1Zjk2ZWExZTQyZGJjNWFiMzdhYzJlYTIxZDlhMTFhOTU0ZjYxM2UxY2UyOGNjNjcxNzNhMzU2Mjk2NzQ0YjJjYzQ0YWI2ZjlkYzk3ZmFjYyIsImlhdCI6MTc4NDcyNjU3MCwibmJmIjoxNzg0NzI2NTcwLCJleHAiOjE4MzAyMTEyMDAsInN1YiI6IjE0NTUyODM1IiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjM1ODU3OTgzLCJiYXNlX2RvbWFpbiI6ImtvbW1vLmNvbSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJwdXNoX25vdGlmaWNhdGlvbnMiLCJmaWxlcyIsImNybSIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiXSwiaGFzaF91dWlkIjoiYjU4MWQxZDMtYTcxNS00YzRmLTkwMDctZTYwYmI1MzlmMTdmIiwiYXBpX2RvbWFpbiI6ImFwaS1jLmtvbW1vLmNvbSJ9.RBFF1wCgOF8wdTqPLXpabe4LL0boXQ8CZ89ovXzbZiTDbS_vdVmRjQwMHeMLaGixJy54TiVpTNScqzmg1BR2wiaonJya3FcxiqqfZIdIlx6QRNZnzDU2FqMRGfwGKDxrpuuewpv0crDrSjTLfF5sLb1kAPYYnrnWl73iKr2gxTzDLjmAdn9SRKWhpBTUH78rsSR4kTTAiEdtKdAJCNkJus6IIdHc6rKRsvuj25HmWuv0arX3MpBFZEv2ghMGOZQrwYwX5XbXhxEaMz43XpDP-o3yOAv4rcOG929NeW0foUDpR7ysCScMeSbPQp5GuKHU3d0hj6iD0qllfiAmtfDfVw")
 
-# URL Limpa: Removido o pgbouncer=true e adicionado o sslmode=require compatível com Python
-SUPABASE_URL = "postgresql+psycopg2://postgres.mwdhclwookhpwzrhfjjp:%5BRomeuzinho24%5D@aws-1-us-east-2.pooler.supabase.com:6543/postgres?sslmode=require"
+# URL corrigida com a senha real 'Romeuzinho22' e a região us-east-2
+SUPABASE_URL = "postgresql+psycopg2://postgres.mwdhclwookhpwzrhfjjp:Romeuzinho22@aws-1-us-east-2.pooler.supabase.com:6543/postgres?sslmode=require"
 
 # ==========================================
 # 2. CONEXÃO COM BANCO DE DADOS
